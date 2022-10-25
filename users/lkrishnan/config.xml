@@ -1,0 +1,73 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<user>
+  <fullName>Lakshminarayanan Krishnan</fullName>
+  <properties>
+    <jenkins.security.ApiTokenProperty>
+      <apiToken>{AQAAABAAAAAwINqLOt0ZULYKQTyigf1vUTVtPfJMc/+xvlK7ZRASeccN8D1WZ+72hwN7wuuvedgYN6XzYZsoFhfViAOqy8V+IQ==}</apiToken>
+    </jenkins.security.ApiTokenProperty>
+    <com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty plugin="credentials@2.1.16">
+      <domainCredentialsMap class="hudson.util.CopyOnWriteMap$Hash"/>
+    </com.cloudbees.plugins.credentials.UserCredentialsProvider_-UserCredentialsProperty>
+    <hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty plugin="email-ext@2.61">
+      <triggers/>
+    </hudson.plugins.emailext.watching.EmailExtWatchAction_-UserProperty>
+    <hudson.model.MyViewsProperty>
+      <views>
+        <hudson.model.AllView>
+          <owner class="hudson.model.MyViewsProperty" reference="../../.."/>
+          <name>all</name>
+          <filterExecutors>false</filterExecutors>
+          <filterQueue>false</filterQueue>
+          <properties class="hudson.model.View$PropertyList"/>
+        </hudson.model.AllView>
+      </views>
+    </hudson.model.MyViewsProperty>
+    <org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty plugin="display-url-api@2.2.0">
+      <providerId>default</providerId>
+    </org.jenkinsci.plugins.displayurlapi.user.PreferredProviderUserProperty>
+    <hudson.model.PaneStatusProperties>
+      <collapsed/>
+    </hudson.model.PaneStatusProperties>
+    <hudson.search.UserSearchProperty>
+      <insensitiveSearch>true</insensitiveSearch>
+    </hudson.search.UserSearchProperty>
+    <hudson.tasks.Mailer_-UserProperty plugin="mailer@1.20">
+      <emailAddress>Lakshmi.Krishnan@nextlabs.com</emailAddress>
+    </hudson.tasks.Mailer_-UserProperty>
+    <jenkins.security.LastGrantedAuthoritiesProperty>
+      <roles>
+        <string>SGDC remote access group</string>
+        <string>NextLabsProd@nextlabs.com</string>
+        <string>authenticated</string>
+        <string>hudson-admin</string>
+        <string>perforce@nextlabs.com</string>
+        <string>devops@nextlabs.com</string>
+        <string>skydrm-support@nextlabs.com</string>
+        <string>Users</string>
+        <string>build-visitor</string>
+        <string>engvpn</string>
+        <string>SGDC All</string>
+        <string>build-iOS@nextlabs.com</string>
+        <string>build-admin</string>
+        <string>Release</string>
+        <string>all</string>
+        <string>ReportingGroup {bdf681c4-4a43-4809-839e-2fdb996dc739}</string>
+        <string>msdn@nextlabs.com</string>
+        <string>release_admin</string>
+        <string>engineering-services</string>
+        <string>cdcdev.msdn@nextlabs.com</string>
+        <string>skydrm_svcp@nextlabs.com</string>
+        <string>escrow-admin</string>
+        <string>apple@nextlabs.com</string>
+        <string>Escrow Admin</string>
+        <string>vpn</string>
+        <string>system-engineering</string>
+        <string>Domain Users</string>
+        <string>release-management@nextlabs.com</string>
+        <string>R&amp;D_SGDC</string>
+      </roles>
+      <timestamp>1532574980595</timestamp>
+    </jenkins.security.LastGrantedAuthoritiesProperty>
+    <hudson.plugins.perforce.PerforceUserProperty plugin="perforce@1.3.36"/>
+  </properties>
+</user>

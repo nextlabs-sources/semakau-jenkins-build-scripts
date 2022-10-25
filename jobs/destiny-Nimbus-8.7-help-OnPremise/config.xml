@@ -1,0 +1,98 @@
+<?xml version='1.1' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>Sync code of Destiny Help Repo for OnPremise content&#xd;
+&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;b&gt;repo&lt;/b&gt;: https://bitbucket.org/nxtlbs-devops/techpubs-destiny-help-onpremise&#xd;
+&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;b&gt;branch&lt;/b&gt;: origin/Nimbus-8.7</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>-1</daysToKeep>
+        <numToKeep>20</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.9.1">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>git@bitbucket.org:nxtlbs-devops/techpubs-destiny-help-onpremise.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>origin/Nimbus-8.7</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions>
+      <hudson.plugins.git.extensions.impl.WipeWorkspace/>
+    </extensions>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>false</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <hudson.triggers.SCMTrigger>
+      <spec>H/5 * * * *</spec>
+      <ignorePostCommitHooks>false</ignorePostCommitHooks>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>set +x
+export NLEXTERNALDIR2=E:/JENKINS/P4/main_external
+export NLGITEXTERNALDIR=E:/JENKINS/P4/git_external
+export JAVA_HOME=${NLEXTERNALDIR2}/j2sdk/jdk1.7.0_71
+
+export NLBUILDROOT=$(cygpath -m ${WORKSPACE} | tr -d -c [:print:])
+
+echo ; echo &quot;INFO: NLBUILDROOT: ${NLBUILDROOT}&quot; ; echo
+
+export PUBLISH_TO_BODA=1
+
+############################
+# Clean the workspace
+############################
+git clean -fd &amp;&amp; true
+git add .
+git stash &amp;&amp; true
+git stash drop &amp;&amp; true
+############################
+
+echo
+echo &quot;################################################################################&quot;
+echo &quot;INFO: Git info about current state of Techpubs-Destiny-Help code&quot;
+git show --quiet HEAD
+echo &quot;################################################################################&quot;
+echo
+
+cd ${WORKSPACE}
+source ./setEnv
+
+# Unmap and remap S: drive
+[ `net use | grep -ic S:` -ne 0 ] &amp;&amp; net use s: /DELETE
+[ `subst | grep -ic S:` -ne 0 ] &amp;&amp; subst s: /d
+subst S: &apos;E:\JENKINS\NLShare\data&apos;
+
+bash -x ./buildRelease
+</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.Mailer plugin="mailer@1.21">
+      <recipients>hudson-build@nextlabs.com ShahNeng.Chok@nextlabs.com </recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.8.10"/>
+  </buildWrappers>
+</project>

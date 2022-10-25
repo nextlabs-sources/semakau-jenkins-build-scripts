@@ -1,0 +1,116 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project>
+  <actions/>
+  <description>PCV build of ControlCenter Nimbus_8.6 Refactored code - Generate Installer&#xd;
+&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;- &lt;b&gt;repo&lt;/b&gt;: https://bitbucket.org/nxtlbs-devops/destiny-installer&#xd;
+&lt;br&gt;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;- &lt;b&gt;branch&lt;/b&gt;: origin/onprem/nimbus/8.6.0/pcv/integration_main</description>
+  <keepDependencies>false</keepDependencies>
+  <properties>
+    <jenkins.model.BuildDiscarderProperty>
+      <strategy class="hudson.tasks.LogRotator">
+        <daysToKeep>-1</daysToKeep>
+        <numToKeep>10</numToKeep>
+        <artifactDaysToKeep>-1</artifactDaysToKeep>
+        <artifactNumToKeep>-1</artifactNumToKeep>
+      </strategy>
+    </jenkins.model.BuildDiscarderProperty>
+  </properties>
+  <scm class="hudson.plugins.git.GitSCM" plugin="git@3.7.0">
+    <configVersion>2</configVersion>
+    <userRemoteConfigs>
+      <hudson.plugins.git.UserRemoteConfig>
+        <url>git@bitbucket.org:nxtlbs-devops/destiny-installer.git</url>
+      </hudson.plugins.git.UserRemoteConfig>
+    </userRemoteConfigs>
+    <branches>
+      <hudson.plugins.git.BranchSpec>
+        <name>origin/onprem/nimbus/8.6.0/pcv/integration_main</name>
+      </hudson.plugins.git.BranchSpec>
+    </branches>
+    <doGenerateSubmoduleConfigurations>false</doGenerateSubmoduleConfigurations>
+    <submoduleCfg class="list"/>
+    <extensions/>
+  </scm>
+  <canRoam>true</canRoam>
+  <disabled>true</disabled>
+  <blockBuildWhenDownstreamBuilding>false</blockBuildWhenDownstreamBuilding>
+  <blockBuildWhenUpstreamBuilding>false</blockBuildWhenUpstreamBuilding>
+  <triggers>
+    <jenkins.triggers.ReverseBuildTrigger>
+      <spec></spec>
+      <upstreamProjects>pcv_CC_Nimbus_8.6_IntegrationMain_serverapps, </upstreamProjects>
+      <threshold>
+        <name>SUCCESS</name>
+        <ordinal>0</ordinal>
+        <color>BLUE</color>
+        <completeBuild>true</completeBuild>
+      </threshold>
+    </jenkins.triggers.ReverseBuildTrigger>
+    <hudson.triggers.SCMTrigger>
+      <spec>H/15 * * * *</spec>
+      <ignorePostCommitHooks>false</ignorePostCommitHooks>
+    </hudson.triggers.SCMTrigger>
+  </triggers>
+  <concurrentBuild>false</concurrentBuild>
+  <builders>
+    <hudson.tasks.Shell>
+      <command>set +x
+export NLEXTERNALDIR=F:/JENKINS/P4/external
+export NLEXTERNALDIR2=F:/JENKINS/P4/main_external
+export JAVA_HOME=${NLEXTERNALDIR2}/j2sdk/jdk1.7.0_71
+
+export DESTINY_OPENAZ_NODEJS_SRC_TREE_ROOT=F:/JENKINS/source_destiny-openaz-nodejs_Nimbus_release_8.1.0/workspace
+export DESTINY_UI_SRC_TREE_ROOT=F:/JENKINS/source_destiny-ui_Nimbus_OnPremise/workspace
+export TECHPUBS_HELP_ROOT=F:/JENKINS/destiny-Nimbus-8.5-help-OnPremise/workspace
+
+set +x
+echo &quot;################################################################################&quot;
+echo &quot;INFO: Git info about current state of DESTINY_OPENAZ_NODEJS_SRC_TREE_ROOT&quot;
+echo &quot;INFO: DESTINY_OPENAZ_NODEJS_SRC_TREE_ROOT is ${DESTINY_OPENAZ_NODEJS_SRC_TREE_ROOT}&quot;
+cd ${DESTINY_OPENAZ_NODEJS_SRC_TREE_ROOT}/
+git show --quiet --no-patch HEAD
+echo &quot;################################################################################&quot;
+
+echo &quot;################################################################################&quot;
+echo &quot;INFO: Git info about current state of DESTINY_UI_SRC_TREE_ROOT&quot;
+echo &quot;INFO: DESTINY_UI_SRC_TREE_ROOT is ${DESTINY_UI_SRC_TREE_ROOT}&quot;
+cd ${DESTINY_UI_SRC_TREE_ROOT}/
+git show --quiet --no-patch HEAD
+echo &quot;################################################################################&quot;
+
+echo &quot;################################################################################&quot;
+echo &quot;INFO: Git info about current state of TECHPUBS_HELP_ROOT&quot;
+echo &quot;INFO: TECHPUBS_HELP_ROOT is ${TECHPUBS_HELP_ROOT}&quot;
+cd ${TECHPUBS_HELP_ROOT}/
+git show --quiet --no-patch HEAD
+echo &quot;################################################################################&quot;
+
+set -x
+
+cd ${WORKSPACE}/
+source ./setEnv
+
+# Unmap and remap S: drive
+[ `net use | grep -ic S:` -ne 0 ] &amp;&amp; net use s: /DELETE
+[ `subst | grep -ic S:` -ne 0 ] &amp;&amp; subst s: /d
+subst S: &apos;F:\Share\NLShare\data&apos;
+
+./buildPcv</command>
+    </hudson.tasks.Shell>
+  </builders>
+  <publishers>
+    <hudson.tasks.Mailer plugin="mailer@1.20">
+      <recipients>lakshmi.krishnan@nextlabs.com ShahNeng.Chok@nextlabs.com</recipients>
+      <dontNotifyEveryUnstableBuild>false</dontNotifyEveryUnstableBuild>
+      <sendToIndividuals>false</sendToIndividuals>
+    </hudson.tasks.Mailer>
+  </publishers>
+  <buildWrappers>
+    <hudson.plugins.ws__cleanup.PreBuildCleanup plugin="ws-cleanup@0.34">
+      <deleteDirs>false</deleteDirs>
+      <cleanupParameter></cleanupParameter>
+      <externalDelete></externalDelete>
+    </hudson.plugins.ws__cleanup.PreBuildCleanup>
+    <hudson.plugins.timestamper.TimestamperBuildWrapper plugin="timestamper@1.8.9"/>
+  </buildWrappers>
+</project>
